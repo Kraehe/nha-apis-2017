@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <title></title>
+  </head>
+  <body>
+      <center>
+          <button id="ba">Button A</button>
+          <button id="bb">Button B</button>
+            <br>
+          sum a = <span id="dissuma"></span>
+            <br>
+          average a =<span id="disavga"></span>
+            <br>
+          sum b = <span id="dissumb"></span>
+            <br>
+          average b = <span id="disavgb"></span>
+      </center>
+
+      <script>
+      let ar_a = [];
+      let ar_b = [];
+
+      let getSum = (ary) => {
+        let sum = 0;
+        for(let i = 0; i < ary.length; i++) {
+          sum += ary[i];
+          // this is stating that sum is sum = a[i] + sum;
+        }
+        return sum;
+      }
+
+      let compAvg = (ary) => {
+        return getSum(ary) / ary.length;
+      }
+
+
+      $("#ba").click(()=>{
+        ar_a.push(Math.floor((Math.random() * 1000) + 1));
+        console.log(ar_a);
+
+        $("#dissuma").html(getSum(ar_a));
+        $("#disavga").html(compAvg(ar_a));
+        });
+
+      $("#bb").click(()=>{
+        ar_b.push(Math.floor((Math.random() * 1000) + 1));
+        console.log(ar_b)
+
+        $("#dissumb").html(getSum(ar_b));
+        $("#disavgb").html(compAvg(ar_b));
+      });
+
+
+      </script>
+  </body>
+</html>
