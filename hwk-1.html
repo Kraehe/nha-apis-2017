@@ -1,18 +1,101 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <title>Login || Register</title>
+        <style>
+            .form-control {
+              width: 50%;
+              background-color: snow;
+            }
+            .errorr {
+              color: red;
+            }
+            #display_box {
+              background-color: snow;
+              width: auto;
+              height: inherit;
+              border-radius: 5px;
+            }
+        </style>
     </head>
     <body>
-        <p>Email:</p>
-            <br>
-        <input type="email" id="email"/>
-            <br>
-        <p>Password:</p>
-            <br>
-        <input type="password" id="pass"/>
+        <div class="container">
 
+            <div class="col-md-6">
+
+                <h1>Login</h1>
+
+                <p>Email:</p>
+                <input type="email" class="form-control" id="lemail"/>
+                    <br>
+                    <br>
+                <p>Password:</p>
+                <input type="password" class="form-control" id="lpass"/>
+                    <br>
+                    <br>
+                <button id="login" class="btn btn-default">Login!</button>
+                    <br>
+                    <br>
+                <p id="logerr" class="errorr"></p>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <h1>Register</h1>
+
+                <p>Name:</p>
+                <input type="text" class="form-control" id="rname"></input>
+                    <br>
+                    <br>
+                <p>Email:</p>
+                <input type="email" class="form-control" id="remail">
+                    <br>
+                    <br>
+                <p>Password:</p>
+                <input type="password" class="form-control" id="rpass">
+                    <br>
+                    <br>
+                <button id="register" class="btn btn-default">Register</button>
+                    <br>
+                    <br>
+                <p id="regiserr" class="errorr"></p>
+
+            </div>
+            <div id="display_box">
+
+            </div>
+
+        </div>
         <script>
+        const names=[];
+        const usernames=[];
+        const pwds=[];
+        const users = {
+            email: "password",
+        };
+
+
+
+        //check if rvalues are empty, if empty return that they need to have values in regiserr
+        //push rvalues into the arrays when registering. check if there is already an email with that
+        $("#register").click(()=>{
+          if ( $("#rname").val() == "" ) {
+            $("#regiserr").html("Please enter a name.");
+          } else {
+
+            names.push($("#rname").val());
+          }
+        })
+
+        //check if lvalues are empty, if empty return that they need values in logerr
+        //look in arrays to see if lvalues match with the items in array. if it doesn't, state that in logerr
+        $("#login").click(()=>{
+
+
+        })
         $("#email").val()
         $("#password").val()
         </script>
