@@ -18,15 +18,35 @@
 
 
     <script>
+        let yourScore = 0;
+        let yourCardVal = [];
+        let checkCard = (y) => {
+            if ( y.value === "KING" || y.value === "QUEEN" || y.value === "JACK" ) {
+                    console.log(y.value)
+                    yourCardVal.push(10)
+                    yourScore = yourScore + 10
+            } else if (y.value === "ACE") {
+                    if ( yourScore <= 10 ) {
+                        console.log(y.value)
+                        yourCardVal.push(11)
+                        yourScore = yourScore + 11
+                    } else if ( yourScore > 10) {
+                        console.log(y.value)
+                        yourCardVal.push(1)
+                        yourScore = yourScore + 1
+                    } else {
+                      //???
+                    }
+            } else {
+                    console.log("This card is already a number!")
+                    yourCardVal.push(parseInt(y.value));
+                    yourScore = yourScore + parseInt(y.value)
+            }
+        }
         $.get(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6`,
         (response)=>{
           console.log(response)
-          let yourCardVal = [];
-          let yourScore = 0;
           // let compScore = 0;
-          // let checkScore = () => {
-          //   if
-          // }
           $.get(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/?count=2`,
           (resp0nse)=>{
             console.log(resp0nse);
@@ -34,32 +54,19 @@
             let sCard = resp0nse.cards[1];
             $("#yourHand").append(`<img src='${fCard.image}'></img>
                                    <img src='${sCard.image}'></img>`);
-            if (fCard.value === "KING" || "QUEEN" || "JACK") {
-                    fCard.value = 10;
-                    console.log(fCard.value);
-                    yourCardVal.push(fCard.value);
-            } else if (fCard.value === "ACE") {
-                    if ( yourScore <= 10 ) {
-                        fCard.value = 11
-                        console.log(fCard.value);
-                        yourCardVal.push(fCard.value)
-                    } else if ( yourScore > 10){
-                        fCard.value = 1
-                        console.log(fCard.value);
-                        yourCardVal.push(fCard.value)
-                    }
-            } else if () {
-                    yourCardVal.push(`${fCard.value}, ${sCard.value}`);
-            }
-
+            checkCard(fCard)
+            checkCard(sCard)
+            console.log(yourScore)
             console.log(yourCardVal)
             $("#hit").click(()=>{
               $.get(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/?count=1`,
               (resp1nse)=>{
                   console.log(resp1nse);
-                  let nCard = resp1nse.cards[0].image;
-                  $("#yourHand").append(`<img src='${nCard}'></img>`);
-
+                  let nCard = resp1nse.cards[0];
+                  $("#yourHand").append(`<img src='${nCard.image}'></img>`);
+                  checkCard(nCard)
+                  console.log(yourScore)
+                  console.log(yourCardVal)
                 })})})})
     </script>
   </body>
