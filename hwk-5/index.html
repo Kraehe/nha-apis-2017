@@ -14,11 +14,14 @@
     <button id="hit">Hit</button>
     <button id="stay">Stay</button>
     <br>
+    <div id="compHand"></div>
+
 
 
 
     <script>
         let yourScore = 0;
+        let compScore = 0;
         let yourCardVal = [];
         let checkCard = (y) => {
             if ( y.value === "KING" || y.value === "QUEEN" || y.value === "JACK" ) {
@@ -34,8 +37,6 @@
                         console.log(y.value)
                         yourCardVal.push(1)
                         yourScore = yourScore + 1
-                    } else {
-                      //???
                     }
             } else {
                     console.log("This card is already a number!")
@@ -46,7 +47,6 @@
         $.get(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6`,
         (response)=>{
           console.log(response)
-          // let compScore = 0;
           $.get(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/?count=2`,
           (resp0nse)=>{
             console.log(resp0nse);
@@ -58,6 +58,15 @@
             checkCard(sCard)
             console.log(yourScore)
             console.log(yourCardVal)
+            $.get(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/?count=2`,
+              (compResponse)=>{
+                console.log(compResponse)
+                let cfCard = compResponse.cards[0];
+                let csCard = compResponse.cards[1];
+                $("#compHand").append(`<img src='${cfCard.image}'></img>
+                                       <img src='${csCard.image}'></img>`);
+              })
+
             $("#hit").click(()=>{
               $.get(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/?count=1`,
               (resp1nse)=>{
@@ -67,7 +76,10 @@
                   checkCard(nCard)
                   console.log(yourScore)
                   console.log(yourCardVal)
-                })})})})
+                })
+              })
+            })
+          })
     </script>
   </body>
 </html>
