@@ -30,21 +30,21 @@
       yourCardVal.push(10)
       yourScore = yourScore + 10
 
-    } else if (y.value === "ACE") {
+    } else if (card.value === "ACE") {
       if ( yourScore <= 10 ) {
-        console.log(y.value)
+        console.log(card.value)
         yourCardVal.push(11)
         yourScore = yourScore + 11
 
       } else if ( yourScore > 10) {
-        console.log(y.value)
+        console.log(card.value)
         yourCardVal.push(1)
         yourScore = yourScore + 1
       }
     } else {
-      console.log(y.value)
-      yourCardVal.push(parseInt(y.value));
-      yourScore = yourScore + parseInt(y.value)
+      console.log(card.value)
+      yourCardVal.push(parseInt(card.value));
+      yourScore = yourScore + parseInt(card.value)
     }
   }
   // Checks the Computer's card
