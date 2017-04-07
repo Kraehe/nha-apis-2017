@@ -1,86 +1,118 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <!-- Deck of Cards -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <div id="yourHand"></div>
-    <br>
-    <div id="score"></div>
-    <br>
-    <button id="hit">Hit</button>
-    <button id="stay">Stay</button>
-    <br>
-    <div id="compHand"></div>
+<head>
+  <!-- Deck of Cards -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<body>
+  <div id="yourHand"></div>
+  <br>
+  <div id="score"></div>
+  <br>
+  <button id="hit">Hit</button>
+  <button id="stay">Stay</button>
+  <br>
+  <div id="compHand"></div>
 
 
+  <script>
+  let yourScore = 0;
+  let compScore = 0;
+  let yourCardVal = [];
+  let compCardVal = [];
+
+  // Checks the User's card
+  let checkCard = (card) => {
+    if ( card.value === "KING" || card.value === "QUEEN" || card.value === "JACK" ) {
+      console.log(card.value)
+      yourCardVal.push(10)
+      yourScore = yourScore + 10
+
+    } else if (y.value === "ACE") {
+      if ( yourScore <= 10 ) {
+        console.log(y.value)
+        yourCardVal.push(11)
+        yourScore = yourScore + 11
+
+      } else if ( yourScore > 10) {
+        console.log(y.value)
+        yourCardVal.push(1)
+        yourScore = yourScore + 1
+      }
+    } else {
+      console.log(y.value)
+      yourCardVal.push(parseInt(y.value));
+      yourScore = yourScore + parseInt(y.value)
+    }
+  }
+  // Checks the Computer's card
+  let checkCompCard = (y) => {
+    if ( y.value === "KING" || y.value === "QUEEN" || y.value === "JACK" ) {
+      console.log(y.value)
+      compCardVal.push(10)
+      compScore = compScore + 10
+
+    } else if (y.value === "ACE") {
+      if ( compScore <= 10 ) {
+        console.log(y.value)
+        compCardVal.push(11)
+        compScore = compScore + 11
+
+      } else if ( compScore > 10) {
+        console.log(y.value)
+        compCardVal.push(1)
+        compScore = compScore + 1
+      }
+    } else {
+      console.log(y.value)
+      compCardVal.push(parseInt(y.value));
+      compScore = compScore + parseInt(y.value)
+    }
+  }
+
+  $.get(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6`,
+    (response)=>{
+      console.log(response)
+      $.get(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/?count=2`,
+        (resp0nse)=>{
+          console.log(resp0nse);
+          let fCard = resp0nse.cards[0];
+          let sCard = resp0nse.cards[1];
+          $("#yourHand").append(`<img src='${fCard.image}'></img>
+          <img src='${sCard.image}'></img>`);
+          checkCard(fCard)
+          checkCard(sCard)
+          console.log(yourScore)
+          console.log(yourCardVal)
 
 
-    <script>
-        let yourScore = 0;
-        let compScore = 0;
-        let yourCardVal = [];
-        let checkCard = (y) => {
-            if ( y.value === "KING" || y.value === "QUEEN" || y.value === "JACK" ) {
-                    console.log(y.value)
-                    yourCardVal.push(10)
-                    yourScore = yourScore + 10
-            } else if (y.value === "ACE") {
-                    if ( yourScore <= 10 ) {
-                        console.log(y.value)
-                        yourCardVal.push(11)
-                        yourScore = yourScore + 11
-                    } else if ( yourScore > 10) {
-                        console.log(y.value)
-                        yourCardVal.push(1)
-                        yourScore = yourScore + 1
-                    }
-            } else {
-                    console.log("This card is already a number!")
-                    yourCardVal.push(parseInt(y.value));
-                    yourScore = yourScore + parseInt(y.value)
-            }
-        }
-        $.get(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6`,
-        (response)=>{
-          console.log(response)
-          $.get(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/?count=2`,
-          (resp0nse)=>{
-            console.log(resp0nse);
-            let fCard = resp0nse.cards[0];
-            let sCard = resp0nse.cards[1];
-            $("#yourHand").append(`<img src='${fCard.image}'></img>
-                                   <img src='${sCard.image}'></img>`);
-            checkCard(fCard)
-            checkCard(sCard)
-            console.log(yourScore)
-            console.log(yourCardVal)
-
-
-            $("#hit").click(()=>{
-              $.get(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/?count=1`,
+          $("#hit").click(()=>{
+            $.get(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/?count=1`,
               (resp1nse)=>{
-                  console.log(resp1nse);
-                  let nCard = resp1nse.cards[0];
-                  $("#yourHand").append(`<img src='${nCard.image}'></img>`);
-                  checkCard(nCard)
-                  console.log(yourScore)
-                  console.log(yourCardVal)
-                })
+                console.log(resp1nse);
+                let nCard = resp1nse.cards[0];
+                $("#yourHand").append(`<img src='${nCard.image}'></img>`);
+                checkCard(nCard)
+                console.log(yourScore)
+                console.log(yourCardVal)
               })
             })
-            $.get(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/?count=2`,
-              (compResponse)=>{
-                console.log(compResponse)
-                let cfCard = compResponse.cards[0];
-                let csCard = compResponse.cards[1];
-                $("#compHand").append(`<img src='${cfCard.image}'></img>
-                                       <img src='${csCard.image}'></img>`);
-              })
           })
-    </script>
-  </body>
-</html>
+          $.get(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/?count=2`,
+            (compResponse)=>{
+              console.log(compResponse)
+              let cfCard = compResponse.cards[0];
+              let csCard = compResponse.cards[1];
+              $("#compHand").append(`<img src='${cfCard.image}'></img>
+              <img src='${csCard.image}'></img>`);
+              checkCompCard(cfCard)
+              checkCompCard(csCard)
+              console.log(compScore)
+              console.log(compCardVal)
+            })
+          })
+          </script>
+        </body>
+        </html>
