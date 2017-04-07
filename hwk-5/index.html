@@ -58,14 +58,7 @@
             checkCard(sCard)
             console.log(yourScore)
             console.log(yourCardVal)
-            $.get(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/?count=2`,
-              (compResponse)=>{
-                console.log(compResponse)
-                let cfCard = compResponse.cards[0];
-                let csCard = compResponse.cards[1];
-                $("#compHand").append(`<img src='${cfCard.image}'></img>
-                                       <img src='${csCard.image}'></img>`);
-              })
+
 
             $("#hit").click(()=>{
               $.get(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/?count=1`,
@@ -79,6 +72,14 @@
                 })
               })
             })
+            $.get(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/?count=2`,
+              (compResponse)=>{
+                console.log(compResponse)
+                let cfCard = compResponse.cards[0];
+                let csCard = compResponse.cards[1];
+                $("#compHand").append(`<img src='${cfCard.image}'></img>
+                                       <img src='${csCard.image}'></img>`);
+              })
           })
     </script>
   </body>
