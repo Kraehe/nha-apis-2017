@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!-- Homework 6 of NHA APIs Spring 2017 -->
+<html>
+<head>
+  <script src="keys.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v0.35.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v0.35.1/mapbox-gl.css' rel='stylesheet' />
+  <meta charset="utf-8">
+  <style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+
+  #marker {
+    background-image: url('http://icograms.com/blocks/markers/marker_point.svg');
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .mapboxgl-popup {
+
+    max-width: 200px;
+  }
+
+  </style>
+</head>
+<body>
+  <div id='map'></div>
+  <script>
+  mapboxgl.accessToken = mbkey;
+
+  let markymark = [139.76, 35.667];
+
+  let map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/dark-v9',
+    center: markymark,
+    zoom: 10.1
+  });
+
+  $.get(`http://api.openweathermap.org/data/2.5/weather?id=1850147&units=imperial&APPID=${owkey}`,
+    (response)=>{
+      console.log(response)
+
+      let temp = response.main.temp
+      let popup = new mapboxgl.Popup({offset: 25})
+      .setText(`${temp}°F`);
+
+      let elem = document.createElement('div');
+      elem.id = 'marker';
+
+      new mapboxgl.Marker(elem, {offset:[-25, -25]})
+      .setLngLat(markymark)
+      .setPopup(popup)
+      .addTo(map)
+    })
+
+
+    </script>
+  </body>
+  </html>
