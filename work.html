@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <button class="btn ndl">dfgbfdb </button>
+    <table id="content" class="table">
+      <tr>
+        <td>currentmood</td>
+        <td>favfood</td>
+        <td>screenname</td>
+      </tr>
+    </div>
+    <script>
+    $(".ndl").click(()=>{
+      let public_key = 'E3DDvz0zxRiwm6QK37ow';
+      let private_key = 'd1kk02j2v8Iv0o9dZpRv';
+
+        $.get(`http://data.sparkfun.com/output/` + public_key + `.json?eq[screenname]=DataLord`,
+        (response)=>{
+          console.log(response);
+          for(let i = 0;i < response.length; i++){
+          $("#content").append(`
+            <tr>
+              <td>${response[i].currentmood}</td>
+              <td>${response[i].favfood}</td>
+              <td>${response[i].screenname}</td>
+            </tr>
+            `)
+          }
+        })})
+      var public_key = 'E3DDvz0zxRiwm6QK37ow';
+     $.ajax({
+       method: "POST",
+       url: 'http://data.sparkfun.com/input/' + public_key +'.json',
+       headers: {
+         'Phant-Private-Key':'d1kk02j2v8Iv0o9dZpRv'
+       },
+       jsonp: 'callback',
+       cache: true,
+       dataType: 'json',
+       data: {
+         currentmood: 'sleepy',
+         favfood: 'cake',
+         screenname: 'Gia'
+       },
+       success: function(response) {
+         console.log(response.message);
+       }
+     });
+    </script>
+  </body>
+</html>
